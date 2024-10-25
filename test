@@ -1,0 +1,26 @@
+var l4EBBD26E_0;
+l4EBBD26E_0 = keyboard_check(ord("Z"));
+
+if (l4EBBD26E_0)
+{
+    move_and_collide(xinput*Var_RavenFlySpeed, yinput*Var_RavenFlySpeed, obj_objplaceholder,4,0,0,-1,-1);
+
+    image_speed = 3;
+}
+
+else
+{
+    sprite_index = spr_Gary_left;
+    image_index = 0;
+
+    image_speed = 0;
+
+    move_and_collide(xinput*Var_RavenWalkSpeed, yinput*Var_RavenWalkSpeed, obj_shortobjectplaceholder,4,0,0,-1,-1);
+
+    var l1ED84449_0 = instance_place(x + 0, y + 0, [obj_objplaceholder]);
+if ((l1ED84449_0 > 0))
+{
+    x += -(xinput*Var_RavenWalkSpeed);
+y += -(yinput*Var_RavenWalkSpeed);
+}
+}
