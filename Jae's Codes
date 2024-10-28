@@ -1,0 +1,13 @@
+// Create event for (OBJECT_PLAYER)
+xspd = 0;
+yspd = 0;
+
+move_spd =2; // Movement Speed
+
+is_flying = false; // State to check if player is flying
+normal_sprite = SPR_PLAYER; // normal sprite
+flying_sprite = SPR_PLAYER_FLYING; //Flying sprite
+sprite_index = normal_sprite;  // Start with the normal sprite
+
+//SET DEPTH TO ENSURE PLAYER IS ABOVE THE WALL
+depth = -1;//ENSURE THIS IS LOWER THAN THE WALL'S DEPTH
