@@ -52,3 +52,8 @@ if (!is_flying) {
     x += xspd; // Allow horizontal movement
     y += yspd; // Allow vertical movement
 }
+
+
+
+IMPORTANT:
+THE VARIABLES I USED ARE DIFFERENT FROM WHAT YOU'RE USING SO MAKE SURE YOU CHANGE THEM TO YOURS AS WELL AS ASSET NAMES LOL.
