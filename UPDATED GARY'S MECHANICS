@@ -1,0 +1,54 @@
+// CREATE EVENT FOR (OBJECT PLAYER)
+xspd = 0;
+yspd = 0;
+
+move_spd =2; // Movement Speed
+
+is_flying = false; // State to check if player is flying
+normal_sprite = SPR_PLAYER; // normal sprite
+flying_sprite = SPR_PLAYER_FLYING; //Flying sprite
+sprite_index = normal_sprite;  // Start with the normal sprite
+
+//SET DEPTH TO ENSURE PLAYER IS ABOVE THE WALL
+depth = -1;//ENSURE THIS IS LOWER THAN THE WALL'S DEPTH
+
+// STEP EVENT
+// Movement
+right_key = keyboard_check(ord("D")) || keyboard_check(vk_right); 
+left_key = keyboard_check(ord("A")) || keyboard_check(vk_left);
+up_key = keyboard_check(ord("W")) || keyboard_check(vk_up); 
+down_key = keyboard_check(ord("S")) || keyboard_check(vk_down);
+
+// Flying 
+if (keyboard_check_pressed(vk_space)) {
+    is_flying = !is_flying; // Toggle flying state
+}
+
+// Update sprite based on flying state
+if (is_flying) {
+    sprite_index = flying_sprite; // Set flying sprite
+} else {
+    sprite_index = normal_sprite; // Set normal sprite
+}
+
+// Speed calculation
+xspd = (right_key - left_key) * move_spd;
+yspd = (down_key - up_key) * move_spd;
+
+// Collisions
+if (!is_flying) {
+    // Normal movement with collisions
+    if (place_meeting(x + xspd, y, OBJ_WALL)) { 
+        xspd = 0; // Stop movement on x collision
+    }
+    if (place_meeting(x, y + yspd, OBJ_WALL)) {
+        yspd = 0; // Stop movement on y collision
+    }
+    // Update position if not flying
+    x += xspd;
+    y += yspd;
+} else {
+    // If flying, move freely without collision checks
+    x += xspd; // Allow horizontal movement
+    y += yspd; // Allow vertical movement
+}
