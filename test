@@ -28,6 +28,7 @@ y += -(yinput*Var_RavenWalkSpeed);
 
 
 //PLACEHOLDER WITH MY DOODOO CODE
+// STEP
 var up = keyboard_check(ord("W") ) || keyboard_check(vk_up);
 var down = keyboard_check(ord("S")) || keyboard_check(vk_down);
 var left = keyboard_check(ord("A")) || keyboard_check(vk_left);
@@ -119,3 +120,24 @@ if (!is_flying) {
     x += xspd; // Allow horizontal movement
     y += yspd; // Allow vertical movement
 }
+	//CREATE
+//Create event for Gary
+xspd = 0;
+yspd = 0;
+
+
+// Set walk speed
+RavenWalkSpeed = 2;
+
+// Set flying speed
+RavenFlySpeed = 2;
+RavenFlying = 0;
+
+is_flying = false; // State to check if player is flying
+normal_sprite = spr_Gary; // normal sprite
+flying_sprite = spr_Gary_flying; //Flying sprite
+sprite_index = spr_Gary;  // Start with the normal sprite
+
+//SET DEPTH TO ENSURE PLAYER IS ABOVE THE WALL
+depth = -1; //ENSURE THIS IS LOWER THAN THE WALL'S DEPTH
+
