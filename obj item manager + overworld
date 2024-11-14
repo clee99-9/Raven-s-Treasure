@@ -1,0 +1,275 @@
+// OBJ_ITEM_MANAGER CODE
+// CREATE
+depth = -9999;
+
+global.font = font_add_sprite(spr_main_font, 32, true, 1);
+
+//ITEM CONSTRUCTOR
+function create_item(_name, _desc, _spr, _can_drop, _effect) constructor
+{
+	name = _name;
+	description = _desc;
+	sprite = _spr;
+	effect = _effect
+	can_drop = _can_drop;
+}
+
+
+
+
+//CREATE THE ITEMS (NOTE: YOU CAN PUT ANY ITEMS HERE WITH SAME CODE TO DISPLAY THEM)
+//MAKE SURE YOU SPACE THEM OUT CORRECTLY BY THEIR DIMENSIONS OTHERWISE IT'LL DRAW IT WEIRD ON THE INVENTORY
+//THIS IS WHERE YOU ADD THE ITEMS FIRST 
+global.item_list =
+{
+	stick: new create_item(
+	"Stick",
+	"It’s not that sticky…",
+	spr_stick,
+	true,
+	
+	function()
+	{
+		
+		//get rid of an item
+		array_delete(inv, selected_item, 1);
+	}
+	
+	
+	),
+ 
+	pebble: new create_item(
+	"Pebble",
+	"A small, smooth rock.",
+	spr_pebble,
+	true,
+	
+	function()
+	{
+		
+		//get rid of an item
+		array_delete(inv, selected_item, 1);
+	}
+	
+	
+	),
+	
+	flower: new create_item(
+	"Flower",
+	"These are all over the place, but that doesn’t make them any less pretty.",
+	spr_flower,
+	true,
+	
+	function()
+	{
+		
+		//get rid of an item
+		array_delete(inv, selected_item, 1);
+	}
+	
+	
+	),
+	
+	waterjar: new create_item(
+	"Jar of Water",
+	"Everyone needs water!",
+	Spr_jar_water,
+	true,
+	
+	function()
+	{
+		
+		//get rid of an item
+		array_delete(inv, selected_item, 1);
+	}
+	
+	
+	),	
+	
+	farmerseeds: new create_item(
+	"Farmer's Seeds",
+	"A staple of fine avian cuisine.",
+	spr_farmers_seeds,
+	true,
+	
+	function()
+	{
+		
+		//get rid of an item
+		array_delete(inv, selected_item, 1);
+	}
+	
+	
+	),	
+	
+	bread: new create_item(
+	"Bread",
+	"Pigeons fight over scraps of this stuff, but you’ve got the whole loaf!",
+	spr_bread,
+	true,
+	
+	function()
+	{
+		
+		//get rid of an item
+		array_delete(inv, selected_item, 1);
+	}
+	
+	
+	),	
+	
+	fruit: new create_item(
+	"Fruit",
+	"Shiny and juicy!",
+	spr_fruit,
+	true,
+	
+	function()
+	{
+		
+		//get rid of an item
+		array_delete(inv, selected_item, 1);
+	}
+	
+	
+	),	
+	
+	toiletpaper: new create_item(
+	"Toilet paper",
+	"Now THAT'S treasure.",
+	Spr_toilet_paper,
+	true,
+	
+	function()
+	{
+		
+		//get rid of an item
+		array_delete(inv, selected_item, 1);
+	}
+	
+	
+	),	
+}
+
+//CREATE THE INVENTORY
+
+inv = array_create(0);
+
+inv_max = 1;
+
+selected_item = -1;
+		
+
+
+//FOR DRAWING AND MOUSE POSITIONS
+
+sep = 24;
+screen_bord = 16;
+
+// CLEAN UP
+font_delete(global.font);
+
+// STEP
+//GET SELECTED ITEM
+selected_item = -1;
+for (var i = 0; i < array_length(inv); i++)
+{
+	var _xx = camera_get_view_x(view_camera[0]) + 4;
+	var _yy = camera_get_view_y(view_camera[0]) + 4 + sep*i; 
+
+	
+	if mouse_x > _xx && mouse_x < _xx + 20 && mouse_y > _yy && mouse_y < _yy + 20
+	{
+		selected_item = i;
+	}
+}
+
+
+
+if selected_item != 1
+{
+	//drop an item
+	if mouse_check_button_pressed(mb_right) && inv[selected_item].can_drop == true
+	{
+		array_delete(inv, selected_item, 1);
+	}
+	
+}
+
+// DRAW
+//DRAWING THE SPRITE AND TEXT WITH FONT
+
+draw_set_font(global.font);
+
+
+for (var i = 0; i < array_length(inv); i++)
+{
+	var _xx = camera_get_view_x(view_camera[0]) + 4; //ITEM POSITION X
+	var _yy = camera_get_view_y(view_camera[0]) + 4; //ITEM POSITION Y
+	var _sep = 24; //GAP BETWEEN ITEM 
+	var _col = c_white;
+	
+	
+	//icon
+	draw_sprite(inv[i].sprite, 0, _xx, _yy + _sep*i); 
+	
+	//get selected color
+	if selected_item == i {_col = c_yellow;}; 
+	draw_set_color(_col);
+	
+	//name
+	draw_text(_xx + 22, _yy + 4 + _sep*i, inv[i].name); //ITEM NAME 
+	
+	//description
+	if selected_item == i
+	{
+		draw_text_ext( _xx + 22, _yy + _sep*array_length(inv), inv[i].description, 12, 80);
+	}
+	
+	//reset color to white
+	draw_set_color(c_white);
+
+}
+
+//OBJ_ITEM_OVERWORLD
+// CREATE
+depth = -9999
+item = global.item_list.stick;
+item = global.item_list.pebble;
+item = global.item_list.waterjar;
+item = global.item_list.bread;
+item = global.item_list.flower;
+item = global.item_list.toiletpaper;
+item = global.item_list.farmerseeds;
+item = global.item_list.fruit;
+
+
+
+//NOTE COPY PASTE THIS TO THE CREATION CODE OF (ITEM) ^^
+// item = global.item_list.[item];
+// example: if the item is a pebble you would insert (item = global.item_list.pebble;) into the creation code of the pebble
+
+// STEP
+draw_set_font(global.font);
+
+if place_meeting(x, y, obj_Gary)
+{
+	if(keyboard_check_pressed(ord("E")))
+	{	
+		if item_add(item) == true
+			{
+				instance_destroy();
+			}
+	}
+}
+
+// DRAW
+draw_self();
+
+if place_meeting(x, y, obj_Gary)
+{
+	draw_text(x - 20, y -20, "Press E to pick up");
+	
+}
+
+// IDK WHY ITS NOT WORKING HELPPPPPPPPPP
